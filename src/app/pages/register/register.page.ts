@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonInput, IonButton, IonToggle, IonInputPasswordToggle, IonRow, IonCol, IonText } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-register',
@@ -19,12 +20,17 @@ export class RegisterPage implements OnInit {
   lastName: string = '';
   confirmPassword: string = '';
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private storage:StorageService) { }
 
   ngOnInit() {
   }
 
   goToLogin(){
+    this.router.navigate(['/login']);
+  }
+
+  async register(){
+    await this.storage.registerUser(this.email, this.password, this.firstName, this.lastName);
     this.router.navigate(['/login']);
   }
 
